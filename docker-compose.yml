@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mychatdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  # Pythonサービス
+  app:
+    container_name: vscode-python-docker
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ./:/workspace
+    working_dir: /workspace/app
+    ports:
+      - "8080:8080"  # Pythonアプリケーション用ポート
+    tty: true
+    depends_on:
+      - db
+      #- PYTHONUNBUFFERED=1
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  pgdata:
+  pgadmin_data:

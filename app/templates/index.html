@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>AIとチャット</h1>
+
+        <form id="chat-form">
+            <div class="form-group">
+                <label for="pre_profile">プロフィール情報:</label>
+                <textarea id="pre_profile" rows="4" placeholder="簡単なプロフィールを入力してください..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="query">質問:</label>
+                <textarea id="query" rows="4" placeholder="質問を入力してください..."></textarea>
+            </div>
+
+            <button type="submit">送信</button>
+        </form>
+
+        <div id="response" class="response" style="display:none;">
+            <h3>AIの返答:</h3>
+            <p id="response-text"></p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+</body>
+</html>
